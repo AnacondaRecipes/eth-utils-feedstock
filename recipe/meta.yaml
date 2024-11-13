@@ -9,13 +9,17 @@ package:
 source:
   url: https://github.com/ethereum/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
   sha256: 452bcbbc98d2f8c8822ca5cde7fc0c032581a642ab98567eebd10410d2583729
+  patches: # [win]
+    - 0001-Change-forward-slash-on-backslash.patch # [win]
 
 build:
-  skip: true  # [py>=40 or py2k]
+  skip: true  # [py<3.8]
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
+  build: 
+    - m2-patch  # [win]
   host:
     - pip
     - python
