@@ -1,11 +1,11 @@
 --- tests/core/functional-utils/test_type_inference.py	2024-10-21 22:23:00.000000000 +0300
-+++ tests/core/functional-utils/test_type_inference_updated.py	2024-11-13 16:45:36.674275427 +0200
++++ tests/core/functional-utils/test_type_inference_updated.py	2024-11-13 16:51:44.480839922 +0200
 @@ -8,7 +8,7 @@
  )
  
  MYPY_ARGS = ["--ignore-missing-imports"]
 -FIXTURE_DIR = "fixtures/mypy/"
-+FIXTURE_DIR = r"fixtures\mypy\"
++FIXTURE_DIR = "fixtures\\mypy\\"
  
  
  def fixture_dir(val: str):
