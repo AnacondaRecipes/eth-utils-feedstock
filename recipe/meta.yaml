@@ -29,14 +29,8 @@ requirements:
     - python
     - eth-hash >=0.3.1
     - eth-typing >=5.0.0
-    - toolz >0.8.2
-    - cytoolz >=0.10.1
-  run_constrained:
-    - tox >=4.0.0
-    - pre-commit >=3.4.0
-    - build >=0.9.0
-    - bump_my_version >=0.19.0
-    - pycryptodome >=3.6.6,<4
+    - toolz >0.8.2 # [python_impl == 'pypy']
+    - cytoolz >=0.10.1 # [python_impl == 'cpython']
 
 test:
   source_files:
@@ -57,13 +51,13 @@ test:
 
 about:
   home: https://github.com/ethereum/eth_utils
-  summary: Common utility functions for ethereum codebases.
+  summary: Utility functions for working with ethereum related codebases.
   license: MIT
   license_family: MIT
   license_file: LICENSE
   dev_url: https://github.com/ethereum/eth-utils
   doc_url: https://eth-utils.readthedocs.io/en/stable/
-  description: Common utility functions for ethereum codebases.
+  description: Common utility functions for python code that interacts with Ethereum
 
 extra:
   recipe-maintainers:
