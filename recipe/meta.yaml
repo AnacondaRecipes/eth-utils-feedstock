@@ -1,5 +1,5 @@
 {% set name = "eth-utils" %}
-{% set version = "2.1.0" %}
+{% set version = "5.1.0" %}
 
 
 package:
@@ -7,43 +7,56 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: fcb4c3c1b32947ba92970963f9aaf40da73b04ea1034964ff8c0e70595127138
+  url: https://github.com/ethereum/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: 452bcbbc98d2f8c8822ca5cde7fc0c032581a642ab98567eebd10410d2583729
+  patches: # [win]
+    - 0001-Change-forward-slash-on-backslash.patch # [win]
 
 build:
+  skip: true  # [py<3.8]
   number: 0
-  skip: true  # [py>=40 or py2k]
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
-  build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+  build: 
+    - m2-patch  # [win]
   host:
     - pip
     - python
     - setuptools
-    - cytoolz <1.0.0,>=0.10.1  # [python_impl == 'cpython']
+    - wheel
   run:
-    - cytoolz <1.0.0,>=0.10.1  # [python_impl == 'cpython']
-    - eth-hash <1.0.0,>=0.3.1
-    - eth-typing <4.0.0,>=3.0.0
     - python
-    - toolz <1,>0.8.2  # [python_impl == 'pypy']
-    - cached-property <2,>=1.5.2  # [py<3.8]
+    - eth-hash >=0.3.1
+    - eth-typing >=5.0.0
+    - cytoolz >=0.10.1
 
 test:
+  source_files:
+    - fixtures
+    - tests
   imports:
     - eth_utils
     - eth_utils.curried
+  commands:
+    - pip check
+    - pytest -vv tests
   requires:
     - pip
+    - hypothesis >=4.43.0
+    - pytest >=7.0.0
+    - pytest-xdist >=2.4.0
+    - mypy ==1.10.0
 
 about:
   home: https://github.com/ethereum/eth_utils
-  summary: Common utility functions for ethereum codebases.
+  summary: Utility functions for working with ethereum related codebases.
   license: MIT
+  license_family: MIT
   license_file: LICENSE
+  dev_url: https://github.com/ethereum/eth-utils
+  doc_url: https://eth-utils.readthedocs.io/en/stable/
+  description: Common utility functions for python code that interacts with Ethereum
 
 extra:
   recipe-maintainers:
