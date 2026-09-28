@@ -14,12 +14,10 @@ source:
 
 build:
   skip: true  # [py<3.8]
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
-  build: 
-    - m2-patch  # [win]
   host:
     - pip
     - python
